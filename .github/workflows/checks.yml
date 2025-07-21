@@ -1,12 +1,17 @@
-name: Simple Test
+---
+name: Checks
 
 on: [push]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  test-lint:
+    name: Test & Lint
+    runs-on: ubuntu-20.04
     steps:
-      - name: Check out repo
+      - name: Login to Docker Hub
+        uses: docker/login-docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Check out
         uses: actions/checkout@v2
-      - name: Run a simple command
-        run: echo "Hello, world!"

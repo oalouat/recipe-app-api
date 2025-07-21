@@ -1,12 +1,10 @@
----
-name: Checks
+name: Test Runner
 
 on: [push]
 
 jobs:
-  test-lint:
-    name: Test & Lint
+  simple-test:
     runs-on: ubuntu-20.04
     steps:
-      - name: Login to Docker Hub
-        run: echo "${{ secrets.DOCKERHUB_USER }}" && echo "${{ secrets.DOCKERHUB_TOKEN }}"
+      - name: Check Runner
+        run: echo "✅ Runner working"

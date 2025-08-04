@@ -25,7 +25,6 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
         read_only_fields = ['id']
 
-
 class RecipeSerializer(serializers.ModelSerializer):
     """Serializer for recipes."""
     tags = TagSerializer(many=True, required=False)
@@ -35,7 +34,6 @@ class RecipeSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = ['id', 'title', 'time_minutes', 'price', 'link', 'tags', 'ingredients']
         read_only_fields = ['id']
-
 
     def _get_or_create_tags(self, tags, recipe):
         """Handle getting or creating tags as needed"""
@@ -88,7 +86,6 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
-
 
 class RecipeDetailSerializer(RecipeSerializer):
     """Serializer for recipe detail view"""

@@ -31,7 +31,6 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
-    
 
 class AuthTokenSerializer(serializers.Serializer):
     """Serializer for the user token"""
@@ -58,4 +57,3 @@ class AuthTokenSerializer(serializers.Serializer):
         
         attrs['user']=user
         return attrs
-

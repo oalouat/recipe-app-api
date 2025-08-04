@@ -1,16 +1,25 @@
-from rest_framework import permissions, authentication
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import (
+    permissions,
+    authentication,
+    viewsets,
+    mixins,
+    status,
+)
 
-from recipe.serializers import RecipeSerializer, RecipeDetailSerializer, TagSerializer, IngredientSerializer
+from recipe.serializers import (
+    RecipeSerializer,
+    RecipeDetailSerializer,
+    TagSerializer,
+    IngredientSerializer,
+    RecipeImageSerializer
+)
 from core.models import (
     Recipe,
     Tag,
     Ingredient,
 )
-from rest_framework import (
-    viewsets,
-    mixins,
-)
-
 
 class RecipeViewSet(viewsets.ModelViewSet):
     """View for manage recipe APIs"""
@@ -29,12 +38,26 @@ class RecipeViewSet(viewsets.ModelViewSet):
         """Return the serializer class for request"""
         if self.action == 'list':
             return RecipeSerializer
+        elif self.action == 'upload_image':
+            return RecipeImageSerializer
         
         return self.serializer_class
 
     def perform_create(self, serializer):
         """Create a new recipe"""
         serializer.save(user=self.request.user)
+    
+    @action(methods=['POST'], detail=True, url_path='upload_image')
+    def upload_image(self, request, pk=None):
+        """Upload an image to recipe."""
+        recipe = self.get_object()
+        serializer = self.get_serializer(recipe, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
                             mixins.UpdateModelMixin,

@@ -37,7 +37,7 @@ docker-compose run app sh -c "python manage.py test"
 
 Interactive API docs are available at:
 
-http://localhost:8000/api/docs/
+<http://localhost:8000/api/docs/>
 
 Here you can:
 
@@ -69,7 +69,7 @@ docker-compose up
 - PostgreSQL database
 
 - The API will be available at:
-👉 http://localhost:8000/api/
+👉 <http://localhost:8000/api/>
 
 - Swagger docs:
-👉 http://localhost:8000/api/docs/
+👉 <http://localhost:8000/api/docs/>
